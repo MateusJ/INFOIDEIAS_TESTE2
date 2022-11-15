@@ -12,6 +12,8 @@ class Noticia extends BaseModel
     private $texto;
     private $data_ultima_atualizacao;
     private $data_cadastro;
+    private $publicado;
+    private $dataPublicacao;
 
     public function initialize()
     {
@@ -67,6 +69,47 @@ class Noticia extends BaseModel
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of publicado
+     */
+    public function getPublicado()
+    {
+        return $this->publicado;
+    }
+
+    /**
+     * Set the value of publicado
+     *
+     * @return  self
+     */
+    public function setPublicado($publicado)
+    {
+        $this->publicado = $publicado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of dataPublicacao
+     */ 
+    public function getDataPublicacao()
+    {
+        return $this->dataPublicacao;
+    }
+
+    /**
+     * Set the value of dataPublicacao
+     *
+     * @return  self
+     */ 
+    public function setDataPublicacao($dataPublicacao)
+    {
+        $this->dataPublicacao = $dataPublicacao;
 
         return $this;
     }

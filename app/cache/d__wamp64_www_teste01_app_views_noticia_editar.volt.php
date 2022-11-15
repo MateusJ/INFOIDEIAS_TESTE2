@@ -107,17 +107,32 @@
                                         <div class="row">
                                             <div class="form-group col-sm-12">
                                                 <label for ="Titulo">Título <span class="error">(*)<span></label>
-                                                    <?= $this->tag->textField(['titulo', 'width' => '100%', 'class' => 'form-control']) ?>
+                                                    <?= $this->tag->textField(['titulo', 'width' => '100%', 'class' => 'form-control', 'value' => $tituloNot]) ?>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-12">
                                                 <label for ="Texto">Texto</label>
-                                                <?= $this->tag->textArea(['texto', 'class' => 'form-control tinymce-editor', 'maxlength' => 255]) ?>
+                                                <?= $this->tag->textArea(['texto', 'class' => 'form-control tinymce-editor', 'maxlength' => 255, 'value' => $textoNot]) ?>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-4">
+                                                <label for ="Categorias">Categorias</label>
+                                                <?= $this->tag->select(['categoria[]', $categorias, 'using' => ['id', 'nome'], 'multiple' => true]) ?>
+                                            </div>
+                                            <div class="form-group col-sm-4" id="publicado">
+                                                <label for ="Publicado">Publicado</label>
+                                                <?= $this->tag->checkField(['publicado', 'id' => 'checkPubli', 'onclick' => 'checking()']) ?>
+                                            </div>
+                                            <div class="form-group col-sm-4" id="dataPubli">
+                                                <label for ="dataPublicacao">Data de Publicação</label>
+                                                <?= $this->tag->dateField(['dataPublicacao', 'class' => 'form-control tinymce-editor', 'value' => $dataNot]) ?>
                                             </div>
                                         </div>
                                         <div>
                                             <input type='hidden' name='id' value="<?= $this->dispatcher->getParam('id') ?>">
+                                            <input type='hidden' id="ifChecked" value="<?= $ifChecked ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -166,9 +181,29 @@
         
         <script>
             $(document).ready(function(){
+                
+                if(document.getElementById("ifChecked").value == 1){
+                    document.getElementById("checkPubli").checked = true;
+                }else{
+                    document.getElementById("checkPubli").checked = false;
+                }
 
-
+                if(document.getElementById("checkPubli").checked){
+                    document.getElementById('dataPubli').style.visibility = 'visible';
+                }else{
+                    document.getElementById('dataPubli').style.visibility = 'hidden';
+                }
+            
             });
+
+            function checking(){
+                if(document.getElementById("checkPubli").checked){
+                    document.getElementById('dataPubli').style.visibility = 'visible';
+                }else{
+                    document.getElementById('dataPubli').style.visibility = 'hidden';
+                }
+            }
+            
         </script>
     
 

@@ -27,9 +27,17 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group col-sm-12">
-                                                <label for ="Categorias">Categorias <span class="error">(*)<span></label>
-                                                {{ select("robotId", Categorias.findFirst(1), "using": ["id", "nome"]) }}
+                                            <div class="form-group col-sm-4">
+                                                <label for ="Categorias">Categorias</label>
+                                                {{ select("categoria[]", categorias, "using": ["id", "nome"], "multiple":true) }}
+                                            </div>
+                                            <div class="form-group col-sm-4" id="publicado">
+                                                <label for ="Publicado">Publicado</label>
+                                                {{ check_field("publicado", "id":'publicadoCheck', "onclick":'checkCheckd()') }}
+                                            </div>
+                                            <div class="form-group col-sm-4" id="dataPubli">
+                                                <label for ="dataPublicacao">Data de Publicação</label>
+                                                {{ date_field("dataPublicacao", "class": 'form-control tinymce-editor') }}
                                             </div>
                                         </div>
                                     </div>{#/.panel-body#}
@@ -53,8 +61,21 @@
         
         <script>
             $(document).ready(function(){
-
+                if(document.getElementById("publicadoCheck").checked){
+                    document.getElementById('dataPubli').style.visibility = 'visible';
+                }else{
+                    document.getElementById('dataPubli').style.visibility = 'hidden';
+                }
 
             });
+
+            function checkCheckd(){
+                if(document.getElementById("publicadoCheck").checked){
+                    document.getElementById('dataPubli').style.visibility = 'visible';
+                }else{
+                    document.getElementById('dataPubli').style.visibility = 'hidden';
+                }
+            }
+
         </script>
     {% endblock %}

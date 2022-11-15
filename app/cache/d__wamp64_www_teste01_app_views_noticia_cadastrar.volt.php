@@ -110,9 +110,17 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group col-sm-12">
-                                                <label for ="Categorias">Categorias <span class="error">(*)<span></label>
-                                                    <?= $this->tag->select(['robotId', $id, 'using' => ['id']]) ?>
+                                            <div class="form-group col-sm-4">
+                                                <label for ="Categorias">Categorias</label>
+                                                <?= $this->tag->select(['categoria[]', $categorias, 'using' => ['id', 'nome'], 'multiple' => true]) ?>
+                                            </div>
+                                            <div class="form-group col-sm-4" id="publicado">
+                                                <label for ="Publicado">Publicado</label>
+                                                <?= $this->tag->checkField(['publicado', 'id' => 'publicadoCheck', 'onclick' => 'checkCheckd()']) ?>
+                                            </div>
+                                            <div class="form-group col-sm-4" id="dataPubli">
+                                                <label for ="dataPublicacao">Data de Publicação</label>
+                                                <?= $this->tag->dateField(['dataPublicacao', 'class' => 'form-control tinymce-editor']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -162,9 +170,22 @@
         
         <script>
             $(document).ready(function(){
-
+                if(document.getElementById("publicadoCheck").checked){
+                    document.getElementById('dataPubli').style.visibility = 'visible';
+                }else{
+                    document.getElementById('dataPubli').style.visibility = 'hidden';
+                }
 
             });
+
+            function checkCheckd(){
+                if(document.getElementById("publicadoCheck").checked){
+                    document.getElementById('dataPubli').style.visibility = 'visible';
+                }else{
+                    document.getElementById('dataPubli').style.visibility = 'hidden';
+                }
+            }
+
         </script>
     
 
