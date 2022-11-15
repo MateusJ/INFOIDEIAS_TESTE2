@@ -1,6 +1,7 @@
 {% extends 'layouts/index.volt' %}
 
     {%  block extrafooter %}
+    
         <link href="{{ static_url("css/datatables.min.css") }}" rel="stylesheet">
     {% endblock %}
 
@@ -30,40 +31,26 @@
 								<table id="lista-noticia" class="table dataTable table-hover">
 									<thead>
 										<tr>
-											<td>Cod</td>
-											<td>Titulo</td>
-											<td>Texto</td>
-											<td>Ações</td>
+											<td class="col-sm-4">Cod</td>
+											<td class="col-sm-4">Titulo</td>
+											<td class="col-sm-4">Texto</td>
+											<td class="col-sm-4">Ações</td>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-                                            <td><a href="#">#1</a></td>
-                                            <td class="titulo"> Título</td>
-                                            <td class="text-center">Texto</td>
-                                            <td>
-                                                <a href="{{ url(['for':'noticia.editar','id':1]) }}"><span class="glyphicon glyphicon-pencil"></span></a>
-                                                <a href="{{ url(['for':'noticia.excluir','id':1]) }}"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                                            {%for i in 0..noticias | length %}
+                                            {% if noticias[i] is defined %}
+                                            <td><a href="#" class="col-sm-4">#{{i}}</a></td>
+                                            <td class="titulo col-sm-4"> {{noticias[i].titulo}}</td>
+                                            <td class="col-sm-4" >{{noticias[i].texto}}</td>
+                                            <td class="col-sm-4">
+                                                <a href="{{ url(['for':'noticia.editar','id':noticias[i].id]) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                <a href="{{ url(['for':'noticia.excluir','id':noticias[i].id]) }}"><span class="glyphicon glyphicon-remove-sign"></span></a>
                                             </td>
 										</tr>
-                                        <tr>
-                                            <td><a href="#">#2</a></td>
-                                            <td class="titulo"> Título 2</td>
-                                            <td class="text-center">Texto 2</td>
-                                            <td>
-                                                <a href="{{ url(['for':'noticia.editar','id':2]) }}"><span class="glyphicon glyphicon-pencil"></span></a>
-                                                <a href="{{ url(['for':'noticia.excluir','id':2]) }}"><span class="glyphicon glyphicon-remove-sign"></span></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#">#3</a></td>
-                                            <td class="titulo"> Título 3</td>
-                                            <td class="text-center">Texto 3</td>
-                                            <td>
-                                                <a href="{{ url(['for':'noticia.editar','id':3]) }}"><span class="glyphicon glyphicon-pencil"></span></a>
-                                                <a href="{{ url(['for':'noticia.excluir','id':3]) }}"><span class="glyphicon glyphicon-remove-sign"></span></a>
-                                            </td>
-                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
 									</tbody>
 								</table>
                             </div><!-- panel-body -->

@@ -12,6 +12,9 @@ class NoticiaController extends ControllerBase
     {
 
         $this->view->pick("noticia/listar");
+        $noticias = Noticia::find();
+        $this->view->setVar('noticias', $noticias);
+        $this->view->setVar('number', 0);
     }
 
     public function cadastrarAction()
@@ -39,9 +42,8 @@ class NoticiaController extends ControllerBase
 
 
             if (!$novaNoticia->save()) {
-                $this->flash->error('krl deu merda');
+                $this->flash->error('Algo inesperado aconteceu!');
             }
-            $this->flash->success('krl deu certo');
 
             $novaNC = new Noticia_Categoria();
 
@@ -50,10 +52,10 @@ class NoticiaController extends ControllerBase
                 $novaNC->setCategoria_id($cat);
 
                 if (!$novaNC->save()) {
-                    $this->flash->error('krl deu merda no NC');
+                    $this->flash->error('Algo inesperado aconteceu!');
                 }
-                $this->flash->success('krl deu certo no NC');
             }
+            return $this->response->redirect(array('for' => 'noticia.lista'));
         }
     }
 
@@ -66,6 +68,7 @@ class NoticiaController extends ControllerBase
         $id = $this->dispatcher->getParam('id');
 
         $noticiaEdit = Noticia::findFirst($id);
+
 
         $tituloNot = $noticiaEdit->titulo;
         $textoNot = $noticiaEdit->texto;
@@ -80,6 +83,7 @@ class NoticiaController extends ControllerBase
         if ($this->request->isPost()) {
 
             $id = $this->request->getPost("id");
+
             $noticia = Noticia::findFirst($id);
 
             $noticia->setTitulo($this->request->getPost("titulo"));
@@ -92,12 +96,13 @@ class NoticiaController extends ControllerBase
                 $noticia->setDataPublicacao($this->request->getPost("dataPublicacao"));
             } else {
                 $noticia->setPublicado(0);
+                $noticia->setDataPublicacao();
             }
 
             if (!$noticia->save()) {
-                $this->flash->error('krl deu merda');
+                $this->flash->error('Algo inesperado aconteceu!');
             }
-            $this->flash->success('krl deu certo');
+
 
             $NC = Noticia_Categoria::find("noticia_id = $id");
 
@@ -105,7 +110,7 @@ class NoticiaController extends ControllerBase
                 $nc->delete();
             }
 
-            
+
 
             foreach ($this->request->getPost("categoria") as $cat) {
                 $novaNC = new Noticia_Categoria();
@@ -113,10 +118,10 @@ class NoticiaController extends ControllerBase
                 $novaNC->setCategoria_id($cat);
 
                 if (!$novaNC->save()) {
-                    $this->flash->error('krl deu merda no NC');
+                    $this->flash->error('Algo inesperado aconteceu!');
                 }
-                $this->flash->success('krl deu certo no NC');
             }
+            return $this->response->redirect(array('for' => 'noticia.lista'));
         }
     }
 
@@ -133,8 +138,8 @@ class NoticiaController extends ControllerBase
         $noticia = Noticia::findFirst($id);
 
         if (!$noticia->delete()) {
-            $this->flash->error('krl deu merda');
+            $this->flash->error('Algo inesperado aconteceu!');
         }
-        $this->flash->success('krl deu certo');
+        return $this->response->redirect(array('for' => 'noticia.lista'));
     }
 }
